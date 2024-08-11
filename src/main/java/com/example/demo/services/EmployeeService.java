@@ -1,24 +1,34 @@
 package com.example.demo.services;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.models.Employee;
+import com.example.demo.repositories.EmployeeRepository;
 
 @Service
 public class EmployeeService {
     
-    private static List<Employee> employees= new ArrayList<Employee>(); 
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
     public Employee addEmployee(Employee employee){
-        employees.add(employee);
-        return employee;
-    }
-    public Employee retriveEmployeeById(int id){
         try{
-            return employees.get(id);
+            
+            return employeeRepository.save(employee);
+        }
+        catch(Exception e){
+            return null;
+        }
+        
+    }
+    public Optional<Employee> getEmployeeById(Long id){
+        try{
+            if(id!=null)
+                return employeeRepository.findById(id);
+            return null;
         }
         catch(Exception e){
             return null;
@@ -26,3 +36,4 @@ public class EmployeeService {
         
     }
 }
+ 
