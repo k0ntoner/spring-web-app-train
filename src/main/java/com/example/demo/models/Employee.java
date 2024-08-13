@@ -1,11 +1,16 @@
 package com.example.demo.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
+
 
 @Entity
 public class Employee {
@@ -15,8 +20,7 @@ public class Employee {
     private String name;
     private String secondName;
     private Integer passport;
-    
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name="positionId")
     private Position position;
 

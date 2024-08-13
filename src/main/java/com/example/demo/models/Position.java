@@ -1,18 +1,27 @@
 package com.example.demo.models;
 
 
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Position {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String description;
     private String name;
+    private String description;
+    
+    private Double salary;
+
+   
     public Position() {
     }
     public Position(Long id, String name, String description) {
@@ -39,5 +48,11 @@ public class Position {
     }
     public void setName(String name) {
         this.name = name;
+    }
+    public Double getSalary() {
+        return salary;
+    }
+    public void setSalary(Double salary) {
+        this.salary = salary;
     }
 }

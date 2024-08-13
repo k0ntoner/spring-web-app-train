@@ -1,7 +1,13 @@
 package com.example.demo.services;
 
+
+
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,16 +19,31 @@ public class EmployeeService {
     
     @Autowired
     private EmployeeRepository employeeRepository;
-
+    private static final Logger logger= LoggerFactory.getLogger(EmployeeService.class);
     public Employee addEmployee(Employee employee){
         try{
             
-            return employeeRepository.save(employee);
+            Employee newEmployee= employeeRepository.save(employee);
+              
+            logger.info("Employee was successfully added");
+            return newEmployee;
         }
         catch(Exception e){
+            logger.info("Employee adding was failed", e);
             return null;
         }
         
+    }
+    public List<Employee> getAllEmployees(){
+        return employeeRepository.findAll();
+    }
+    public void deleteEmployeeById(Long id){
+        try {
+            employeeRepository.deleteById(id);
+            logger.info("Employee by id: {}, was deleted", id);
+        } catch (Exception e) {
+            logger.error("Error caused by deleting employee", e);
+        }
     }
     public Optional<Employee> getEmployeeById(Long id){
         try{

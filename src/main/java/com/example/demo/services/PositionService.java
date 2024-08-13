@@ -1,9 +1,11 @@
 package com.example.demo.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 import com.example.demo.models.Position;
 import com.example.demo.repositories.PositionRepository;
@@ -19,6 +21,16 @@ public class PositionService {
             return null;
         }
         
+    }
+    public List<Position> getAllPositions(){
+        return positionRepository.findAll();
+    }
+    public void deletePositionById(Long id){
+        try {
+            positionRepository.deleteById(id);
+        } catch (Exception e) {
+            
+        }
     }
     public Optional<Position> getPositionById(Long id){
         try {
