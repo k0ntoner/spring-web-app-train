@@ -6,6 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import jakarta.validation.Constraint;
+import jakarta.validation.Payload;
 
 
 @Constraint(validatedBy = { PasswordMatchesValidator.class })
@@ -13,5 +14,7 @@ import jakarta.validation.Constraint;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface PasswordMatches {
     String message() default "Passwords do not match";
-    
+    Class<?>[] groups() default {};
+    Class<? extends Payload>[] payload() default {};
 }
+

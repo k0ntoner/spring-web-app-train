@@ -20,14 +20,13 @@ public class UserRegistrationViewModel {
     @NotBlank(message = "Password is required")
     @Size(min=8, message = "Password must be at least 8 characters long")
     @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-zA-Z]).{8,}$", message = "Password must contain at least one letter and one number")  
+    private String passwordConfirm;
     
-    private String confirmPassword;
-    
-    public String getConfirmPassword() {
-        return confirmPassword;
+    public String getPasswordConfirm() {
+        return passwordConfirm;
     }
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
     }
     public String getEmail() {
         return email;
