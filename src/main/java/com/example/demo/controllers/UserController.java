@@ -6,12 +6,12 @@ import java.security.Principal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.models.CustomUserDetails;
 import com.example.demo.models.User;
-import com.example.demo.services.EmployeeService;
 import com.example.demo.services.UserService;
 import com.example.demo.viewModels.UserLoginViewModel;
 import com.example.demo.viewModels.UserRegistrationViewModel;
@@ -21,11 +21,9 @@ import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 @Controller
@@ -46,20 +44,7 @@ public class UserController {
         model.addAttribute("userLoginViewModel", new UserLoginViewModel());
         return "login";
     }
-    @PostMapping("/login")
-    public String login(@Valid @ModelAttribute("userLoginViewModel") UserLoginViewModel userLoginViewModel, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "login";
-        }
-        User user= userService.findByEmail(userLoginViewModel.getEmail());
-        if(user!=null){
-            Boolean result= userService.checkPassword(userLoginViewModel.getPassword(), user);
-            if(result){
-                userService.loadUserByUsername(user.getEmail());
-            }
-        }
-        return null;
-    }
+    
     
     @GetMapping("/register")
     public String register(Model model) {
@@ -92,7 +77,9 @@ public class UserController {
     }
     @GetMapping("/dashboard")
     public String dashboard(Principal principal, Model model) {
-        User user=userService.findByEmail(principal.getName());
+        UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) principal;
+        CustomUserDetails customUserDetails = (CustomUserDetails) authenticationToken.getPrincipal();
+        User user= customUserDetails.getUser();
         UserViewModel userVM=new UserViewModel(user.getUsername(), user.getEmail() );
         model.addAttribute("userVM", userVM);
         return "dashboard";

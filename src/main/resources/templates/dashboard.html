@@ -1,0 +1,17 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head> 
+    <title>Getting Started: Serving Web Content</title> 
+    
+</head>
+<body>
+    <h2>Dashboard</h2>
+    <h3>Hello, <span th:text="${userVM.username}"></span></h3>
+    <h3>Email:, <span th:text="${userVM.email}"></span></h3>
+    
+</form>
+<div>
+    <a href="/user/register" class="btn btn-primary">Sign up</a>
+</div>
+</body>
+</html>
